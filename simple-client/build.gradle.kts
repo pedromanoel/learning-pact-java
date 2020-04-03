@@ -1,6 +1,6 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.3.71"
-    id("au.com.dius.pact") version "4.0.8"
+    id("org.jetbrains.kotlin.jvm")
+    id("au.com.dius.pact")
 }
 
 repositories {
