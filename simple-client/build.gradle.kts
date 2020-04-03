@@ -3,10 +3,6 @@ plugins {
     id("au.com.dius.pact")
 }
 
-repositories {
-    jcenter()
-}
-
 dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation(kotlin("stdlib-jdk8"))

@@ -1,2 +1,2 @@
 rootProject.name = "pact-study"
-include("simple-client")
+include("simple-client", "customer-service")
