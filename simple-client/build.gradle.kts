@@ -10,6 +10,7 @@ dependencies {
 
     testImplementation("au.com.dius:pact-jvm-consumer-junit5:4.0.8")
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.1")
+    testImplementation("com.konghq:unirest-java:3.7.00")
 }
 
 pact {

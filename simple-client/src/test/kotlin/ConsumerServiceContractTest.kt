@@ -44,8 +44,9 @@ class ConsumerServiceContractTest {
     internal fun `get details by id for existing customer`(server: MockServer) {
         val response = server.getExistingCustomerDetails()
 
-        assertThat(response).hasStatusOk()
-        assertThat(response).containsHeader("Content-Type" to "application/json")
-        assertThat(response).forCustomer(Customer(FIRST_NAME, LAST_NAME))
+        assertThat(response)
+                .hasStatusOk()
+                .containsHeader("Content-Type" to "application/json")
+                .forCustomer(Customer(FIRST_NAME, LAST_NAME))
     }
 }
