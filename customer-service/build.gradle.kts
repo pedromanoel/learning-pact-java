@@ -13,10 +13,13 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
 
     implementation("io.javalin:javalin:3.8.0")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.11.0.rc1")
 
+    testImplementation("io.mockk:mockk:1.9.3")
+    testImplementation("com.konghq:unirest-java:3.7.00")
+    testImplementation("org.assertj:assertj-core:3.15.0")
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.1")
     testImplementation("au.com.dius:pact-jvm-provider-junit5:4.0.8")
-    testImplementation("com.konghq:unirest-java:3.7.00")
 }
 
 val startApp by tasks.registering {

@@ -1,5 +1,6 @@
 package codes.pedromanoel.pact.customer
 
 fun main() {
-    App().start()
+    val customerService = CustomerService()
+    App(customerService).start()
 }
