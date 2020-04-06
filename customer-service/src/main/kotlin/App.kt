@@ -1,4 +1,4 @@
-package codes.pedromanoel.pact.customerservice
+package codes.pedromanoel.pact.customer
 
 import io.javalin.Javalin
 
@@ -7,5 +7,9 @@ class App {
 
     fun start() {
         javalin.start()
+    }
+
+    fun stop() {
+        javalin.stop()
     }
 }

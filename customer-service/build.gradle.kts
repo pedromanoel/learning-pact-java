@@ -15,6 +15,8 @@ dependencies {
     implementation("io.javalin:javalin:3.8.0")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.1")
+    testImplementation("au.com.dius:pact-jvm-provider-junit5:4.0.8")
+    testImplementation("com.konghq:unirest-java:3.7.00")
 }
 
 val startApp by tasks.registering {
@@ -67,5 +69,5 @@ tasks.test {
 }
 
 application {
-    mainClassName = "codes.pedromanoel.pact.customerservice.MainKt"
+    mainClassName = "codes.pedromanoel.pact.customer.MainKt"
 }
