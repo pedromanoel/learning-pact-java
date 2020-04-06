@@ -1,4 +1,5 @@
 plugins {
+    id("com.github.johnrengelman.shadow")
     id("org.jetbrains.kotlin.jvm")
     id("au.com.dius.pact")
 }
@@ -18,6 +19,6 @@ pact {
     }
 }
 
-tasks.withType<Test> {
+tasks.test {
     useJUnitPlatform()
 }
