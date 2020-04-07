@@ -21,5 +21,7 @@ pact {
 }
 
 tasks.test {
+    systemProperty("pact.provider.version", version)
+    systemProperty("pact.verifier.publishResults", true)
     useJUnitPlatform()
 }
