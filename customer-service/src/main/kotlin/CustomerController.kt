@@ -2,23 +2,23 @@ package codes.pedromanoel.pact.customer
 
 import io.javalin.http.Context
 
-class CustomerController(private val ctx: Context, private val customerService: CustomerService) {
+class CustomerController(private val customerService: CustomerService) {
 
-    fun get() {
-        customerIdFrom()
+    fun getUser(ctx: Context) {
+        customerIdFrom(ctx)
                 ?.let(customerService::findBy)
-                ?.also(toJsonResponseUsing())
-                ?: notFoundResponse()
+                ?.also(toJsonResponseUsing(ctx))
+                ?: notFoundResponse(ctx)
     }
 
-    private fun notFoundResponse() {
+    private fun notFoundResponse(ctx: Context) {
         ctx.status(404)
     }
 
-    private fun toJsonResponseUsing(): (Customer) -> Unit =
+    private fun toJsonResponseUsing(ctx: Context): (Customer) -> Unit =
             { customer -> ctx.json(customer) }
 
-    private fun customerIdFrom(): CustomerId? {
+    private fun customerIdFrom(ctx: Context): CustomerId? {
         return ctx.pathParam("id")
                 .toLongOrNull()
                 ?.let(::CustomerId)

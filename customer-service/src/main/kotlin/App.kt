@@ -1,15 +1,13 @@
 package codes.pedromanoel.pact.customer
 
 import io.javalin.Javalin
-import io.javalin.http.Context
 
 class App(val customerService: CustomerService) {
     private val javalin: Javalin = Javalin.create()
+    private val customerController = CustomerController(customerService)
 
     init {
-        javalin.get("/customers/:id") { ctx: Context ->
-            CustomerController(ctx, customerService).get()
-        }
+        javalin.get("/customers/:id", customerController::getUser)
     }
 
     fun start() {
