@@ -26,7 +26,7 @@ class CustomersControllerTest {
                 .asString()
 
         assertThat(customerJson.body).isEqualTo("""
-            {"id":1234,"firstName":"","lastName":""}
+            {"id":1234,"firstName":"Name","lastName":"Surname"}
         """.trimIndent())
     }
 }

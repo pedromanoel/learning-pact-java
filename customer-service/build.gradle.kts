@@ -1,4 +1,6 @@
 import au.com.dius.pact.provider.ConsumerInfo
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat.*
+import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
 plugins {
     id("com.github.johnrengelman.shadow")
@@ -69,6 +71,10 @@ pact {
 
 tasks.test {
     useJUnitPlatform()
+    testLogging {
+        events = setOf(FAILED)
+        exceptionFormat = FULL
+    }
 }
 
 application {

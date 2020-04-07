@@ -3,7 +3,7 @@ package codes.pedromanoel.pact.customer
 class CustomerService {
     fun findBy(customerId: CustomerId): Customer? =
             when (customerId) {
-                CustomerId(1234) -> Customer(CustomerId(1234), "", "")
+                CustomerId(1234) -> Customer(CustomerId(1234), "Name", "Surname")
                 else -> null
             }
 }
