@@ -1,8 +1,7 @@
 package codes.pedromanoel.pact.customer
 
 import io.javalin.Javalin
-import io.javalin.apibuilder.ApiBuilder.get
-import io.javalin.apibuilder.ApiBuilder.path
+import io.javalin.apibuilder.ApiBuilder.*
 
 class App(val customerService: CustomerService) {
     private val javalin: Javalin = Javalin.create()
@@ -10,11 +9,7 @@ class App(val customerService: CustomerService) {
 
     init {
         javalin.routes {
-            path("customers") {
-                path(":id") {
-                    get(customerController::getUser)
-                }
-            }
+            crud("customers/:id", customerController)
         }
     }
 
