@@ -1,7 +1,7 @@
 package codes.pedromanoel.pact.customer
 
 import io.javalin.Javalin
-import io.javalin.apibuilder.ApiBuilder.*
+import io.javalin.apibuilder.ApiBuilder.crud
 
 class App(val customerService: CustomerService) {
     private val javalin: Javalin = Javalin.create()
