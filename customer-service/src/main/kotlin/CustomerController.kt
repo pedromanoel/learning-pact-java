@@ -19,22 +19,17 @@ class CustomerController(private val customerService: CustomerService) : CrudHan
 
     override fun getOne(ctx: Context, resourceId: String) {
         resourceId.asCustomerId()
-                ?.let(customerService::findBy)
-                ?.also(sendJsonResponse(ctx))
-                ?: sendNotFoundResponse(ctx)
+                ?.let { customerService.findBy(it) }
+                ?.also { ctx.sendJsonResponse(it) }
+                ?: ctx.customerNotFound()
     }
-
-    private fun sendNotFoundResponse(ctx: Context) {
-        ctx.status(404)
-    }
-
-    private fun sendJsonResponse(ctx: Context): (Customer) -> Unit =
-            { customer -> ctx.json(customer) }
 
     override fun update(ctx: Context, resourceId: String) {
         TODO("Not yet implemented")
     }
+
 }
 
-private fun String.asCustomerId(): CustomerId? =
-        toLongOrNull()?.let(::CustomerId)
+private fun Context.sendJsonResponse(customer: Customer) = json(customer)
+private fun Context.customerNotFound() = status(404)
+private fun String.asCustomerId() = toLongOrNull()?.let(::CustomerId)
