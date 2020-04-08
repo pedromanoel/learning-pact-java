@@ -1,6 +1,3 @@
-import au.com.dius.pact.provider.ConsumerInfo
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat.*
-import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
 plugins {
@@ -9,51 +6,6 @@ plugins {
     id("au.com.dius.pact")
 
     application
-}
-
-val startApp by tasks.registering {
-    description = "Executa a aplicação em background"
-    doLast {
-        println("Start App")
-        val jarFile = "${project.name}-all.jar"
-        ProcessBuilder()
-                .directory(project.properties["libsDir"] as File)
-                .command("java", "-jar", jarFile)
-                .start()
-                .pid()
-                .run(Long::toString)
-                .also { pid ->
-                    File(".pid").writeText(pid)
-                }
-
-        TimeUnit.SECONDS.sleep(1)
-    }
-}
-
-val stopApp by tasks.registering {
-    description = "Para a execução em background da aplicação"
-    doLast {
-        println("Stop App")
-        File(".pid")
-                .readLines()
-                .firstOrNull()
-                ?.toLongOrNull()
-                ?.let(ProcessHandle::of)
-                ?.ifPresent { process ->
-                    process.destroy()
-                }
-    }
-}
-
-pact {
-    serviceProviders {
-        create("CustomerService") {
-            startProviderTask = "startApp"
-            terminateProviderTask = "stopApp"
-            port = 7000
-            hasPactsFromPactBroker("http://localhost:9292", closureOf<ConsumerInfo> { })
-        }
-    }
 }
 
 sourceSets {
@@ -65,10 +17,7 @@ sourceSets {
     }
 }
 
-// TODO make intellij identify this sourceSet as test code
 tasks.register<Test>("pactTest") {
-    useJUnitPlatform()
-
     description = "Run pact tests"
     group = "verification"
 
@@ -76,20 +25,23 @@ tasks.register<Test>("pactTest") {
     classpath = sourceSets["pact"].runtimeClasspath
 }
 
-tasks.test {
-    useJUnitPlatform()
-    testLogging {
-        events = setOf(FAILED)
-        exceptionFormat = FULL
-    }
+tasks.register<Task>("fixIdeaModules") {
+    group = "idea"
+    sourceSets["pact"].markAsTestSourceRoot()
+    sourceSets["pact"].markAsTestResource()
+}
+
+tasks.check {
+    dependsOn("pactTest")
 }
 
 application {
     mainClassName = "codes.pedromanoel.pact.customer.MainKt"
 }
 
-val pactImplementation by configurations.getting {
-    extendsFrom(configurations.implementation.get())
+configurations {
+    named("pactRuntimeOnly") { extendsFrom(runtimeOnly.get()) }
+    named("pactImplementation") { extendsFrom(implementation.get()) }
 }
 
 configurations.named("pactRuntimeOnly") {
@@ -110,4 +62,31 @@ dependencies {
 
     pactImplementation("org.junit.jupiter:junit-jupiter:5.6.1")
     pactImplementation("au.com.dius:pact-jvm-provider-junit5:4.0.8")
+}
+
+fun DependencyHandler.pactImplementation(dependencyNotation: Any): Dependency? =
+        add("pactImplementation", dependencyNotation)
+
+fun SourceSet.markAsTestSourceRoot() =
+        replaceInModuleFile(name, "isTestSource=\"false\"", "isTestSource=\"true\"")
+
+fun SourceSet.markAsTestResource() =
+        replaceInModuleFile(name, "java-resource", "java-test-resource")
+
+fun replaceInModuleFile(
+        moduleName: String,
+        token: String,
+        value: String
+) {
+    val modulesDir = "${rootProject.rootDir.path}/.idea/modules/${project.name}"
+    val moduleFileMatch = "*.$moduleName.iml"
+
+    ant.withGroovyBuilder {
+        "replace"(
+                "dir" to modulesDir,
+                "includes" to moduleFileMatch,
+                "token" to token,
+                "value" to value
+        )
+    }
 }
