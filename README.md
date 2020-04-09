@@ -13,3 +13,11 @@ This repository contains:
 1. start the pact broker with `docker-compose up`
 2. in another terminal, generate the pacts with `gradle :simple-client:pactPublish`
 3. verify the pact with `gradle :customer-service:test` or `gradle :customer-service:pactVerify`
+
+## Other stuff
+
+I'm also learning a lot about gradle, specifically:
+
+- Kotlin DSL
+- Custom sourceSets
+- buildSrc for project plugins

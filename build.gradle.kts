@@ -17,7 +17,7 @@ subprojects {
     tasks.withType<Test> {
         useJUnitPlatform()
         testLogging {
-            events = setOf(PASSED, FAILED)
+            events = setOf(PASSED, SKIPPED, FAILED)
             exceptionFormat = FULL
         }
     }
