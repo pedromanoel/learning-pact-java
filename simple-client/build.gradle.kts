@@ -1,6 +1,3 @@
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
-import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
-
 plugins {
     id("com.github.johnrengelman.shadow")
     id("org.jetbrains.kotlin.jvm")
@@ -21,15 +18,5 @@ pact {
     publish {
         pactDirectory = "${project.buildDir}/pacts"
         pactBrokerUrl = "http://localhost:9292"
-    }
-}
-
-tasks.test {
-    systemProperty("pact.provider.version", version)
-    systemProperty("pact.verifier.publishResults", true)
-
-    testLogging {
-        events = setOf(FAILED)
-        exceptionFormat = FULL
     }
 }

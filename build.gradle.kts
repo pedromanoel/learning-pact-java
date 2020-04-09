@@ -1,5 +1,5 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
-import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
+import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
 plugins {
     id("com.github.johnrengelman.shadow") version "5.2.0" apply false
@@ -17,7 +17,7 @@ subprojects {
     tasks.withType<Test> {
         useJUnitPlatform()
         testLogging {
-            events = setOf(FAILED)
+            events = setOf(PASSED, FAILED)
             exceptionFormat = FULL
         }
     }

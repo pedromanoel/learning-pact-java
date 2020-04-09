@@ -10,19 +10,20 @@ plugins {
 
 sourceSets {
     create("pact") {
-        withConvention(KotlinSourceSet::class) {
-            compileClasspath += sourceSets["main"].output
-            runtimeClasspath += sourceSets["main"].output
-        }
+        compileClasspath += sourceSets["main"].output
+        runtimeClasspath += sourceSets["main"].output
     }
 }
 
 tasks.register<Test>("pactTest") {
-    description = "Run pact tests"
+    description = "Run pact tests against the test broker"
     group = "verification"
 
     testClassesDirs = sourceSets["pact"].output.classesDirs
     classpath = sourceSets["pact"].runtimeClasspath
+
+    systemProperty("pact.provider.version", version)
+    systemProperty("pact.verifier.publishResults", true)
 }
 
 tasks.register<Task>("fixIdeaModules") {
