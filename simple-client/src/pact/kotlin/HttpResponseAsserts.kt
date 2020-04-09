@@ -1,5 +1,4 @@
-package codes.pedromanoel.pact.client
-
+import codes.pedromanoel.pact.client.Customer
 import com.google.gson.Gson
 import kong.unirest.HttpResponse
 import org.junit.jupiter.api.Assertions
@@ -35,4 +34,4 @@ class HttpResponseAsserts(private val response: HttpResponse<String>) {
 fun assertThat(response: HttpResponse<String>) = HttpResponseAsserts(response)
 
 private fun HttpResponse<String>.bodyAsCustomer() =
-        Gson().fromJson(body, Customer::class.java)
+        Gson().fromJson(body, codes.pedromanoel.pact.client.Customer::class.java)

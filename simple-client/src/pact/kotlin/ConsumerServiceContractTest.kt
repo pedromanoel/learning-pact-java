@@ -1,11 +1,10 @@
-package codes.pedromanoel.pact.client
-
 import au.com.dius.pact.consumer.MockServer
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider
 import au.com.dius.pact.consumer.junit5.PactConsumerTestExt
 import au.com.dius.pact.consumer.junit5.PactTestFor
 import au.com.dius.pact.core.model.RequestResponsePact
 import au.com.dius.pact.core.model.annotations.Pact
+import codes.pedromanoel.pact.client.Customer
 import io.pactfoundation.consumer.dsl.LambdaDsl.newJsonBody
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
