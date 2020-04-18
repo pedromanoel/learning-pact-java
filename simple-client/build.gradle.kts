@@ -7,9 +7,13 @@ plugins {
 
 dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
+    implementation(platform("org.testcontainers:testcontainers-bom:1.13.0"))
+
     implementation(kotlin("stdlib-jdk8"))
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.+")
+    testImplementation("org.testcontainers:testcontainers")
+    testImplementation("org.testcontainers:junit-jupiter")
 
     pactImplementation("org.junit.jupiter:junit-jupiter:5.6.+")
     pactImplementation("com.konghq:unirest-java:3.7.+")
